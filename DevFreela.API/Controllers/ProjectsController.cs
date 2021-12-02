@@ -29,6 +29,19 @@ public class ProjectsController : ControllerBase
         return Delete(id);
     }
 
+
+    [Route("{id}/start")]
+    [HttpPut]
+    public IActionResult Start(int id){
+        return NoContent();
+    }
+
+    [Route("{id}/finish")]
+    [HttpPut]
+    public IActionResult Finish(int id){
+        return NoContent();
+    }
+
     [Route("{id}/comments")]
     [HttpGet]
     public ActionResult<List<ProjectCommentViewModel>> GetComments(int id){
@@ -47,6 +60,5 @@ public class ProjectsController : ControllerBase
         return CreatedAtAction(nameof(GetCommentById),new{id = 1},projectComment);
     }
 
-    
 
 }
