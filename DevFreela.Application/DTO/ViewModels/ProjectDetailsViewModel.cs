@@ -1,25 +1,12 @@
 using System;
 using System.Collections.Generic;
+using DevFreela.Core.Entities;
 using DevFreela.Core.Enums;
 
-namespace DevFreela.Core.Entities
+namespace DevFreela.Application.DTO.ViewModels
 {
-    public class Project : BaseEntity
+    public class ProjectDetailsViewModel
     {
-
-
-        public Project(string title, string description, int idClient, int idFreelancer, decimal totalCost, DateTime createdAt, ProjectStatus projectStatus)
-        {
-            this.Title = title;
-            this.Description = description;
-            this.IdClient = idClient;
-            this.IdFreelancer = idFreelancer;
-            this.TotalCost = totalCost;
-
-            CreatedAt = DateTime.Now;
-            Comments = new List<ProjectComment>();
-            this.ProjectStatus = ProjectStatus.Created;
-        }
         public string Title { get; private set; }
         public string Description { get; private set; }
         public int IdClient { get; private set; }
@@ -30,10 +17,5 @@ namespace DevFreela.Core.Entities
         public DateTime? StartedAt { get; set; }
         public ProjectStatus ProjectStatus { get; private set; }
         public List<ProjectComment> Comments { get; set; }
-
-
-
-
-
     }
 }

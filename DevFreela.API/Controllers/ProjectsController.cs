@@ -12,7 +12,7 @@ public class ProjectsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public ActionResult<ProjectViewModel> GetById(int id){        
+    public ActionResult<ProjectDetailsViewModel> GetById(int id){        
         return Ok("projeto de {id} retornado");
     }
     [HttpPost]
@@ -20,7 +20,7 @@ public class ProjectsController : ControllerBase
         return CreatedAtAction(nameof(GetById),new{id = 1},projectInputModel);
     }
     [HttpPut("{id}")]
-    public IActionResult Put([FromBody] PutProjectInputModel putProjectInputModel,int id){
+    public IActionResult Put([FromBody] UpdateProjectInputModel putProjectInputModel,int id){
         return NoContent();
     }
     [HttpDelete("{id}")]
@@ -46,4 +46,7 @@ public class ProjectsController : ControllerBase
     public IActionResult PostComment([FromBody] CreateProjectCommentInputModel projectComment,int id){
         return CreatedAtAction(nameof(GetCommentById),new{id = 1},projectComment);
     }
+
+    
+
 }

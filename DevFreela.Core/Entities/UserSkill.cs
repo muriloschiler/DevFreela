@@ -10,7 +10,7 @@ namespace DevFreela.Core.Entities
             this.IdSkill = idSkill;
 
         }
-        public int IdUser { get; private set; }
+        public int IdUser { get; private set;}
         public int IdSkill { get; private set; }
 
     }
