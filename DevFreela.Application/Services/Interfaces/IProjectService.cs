@@ -8,7 +8,7 @@ namespace DevFreela.Application.Services.Interfaces
     {
         List<ProjectViewModel> GetAllProjects(string query);
         ProjectDetailsViewModel GetProjectById(int id);
-        void CreateProject(CreateProjectInputModel projectInputModel);
+        int CreateProject(NewProjectInputModel projectInputModel);
         void UpdateProject(UpdateProjectInputModel putProjectInputModel,int id);
         void DeleteProjetc(int id);
         void StartProject(int id);

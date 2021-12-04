@@ -1,6 +1,6 @@
 
 namespace DevFreela.Application.DTO.InputModels{
-    public class CreateProjectInputModel{
+    public class NewProjectInputModel{
         public string Title { get; private set; }
         public string Description { get; private set; }
         public int IdClient { get; private set; }

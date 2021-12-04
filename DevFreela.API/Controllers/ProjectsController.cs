@@ -16,11 +16,11 @@ public class ProjectsController : ControllerBase
         return Ok("projeto de {id} retornado");
     }
     [HttpPost]
-    public IActionResult Post([FromBody] CreateProjectInputModel projectInputModel){
-        return CreatedAtAction(nameof(GetById),new{id = 1},projectInputModel);
+    public IActionResult Post([FromBody] NewProjectInputModel createProjectInputModel){
+        return CreatedAtAction(nameof(GetById),new{id = 1},createProjectInputModel);
     }
     [HttpPut("{id}")]
-    public IActionResult Put([FromBody] UpdateProjectInputModel putProjectInputModel,int id){
+    public IActionResult Put([FromBody] UpdateProjectInputModel putProjectInputModel){
         return NoContent();
     }
     [HttpDelete("{id}")]
@@ -43,14 +43,13 @@ public class ProjectsController : ControllerBase
     }
 
     [Route("{id}/comments")]
-    [HttpGet]
-    public ActionResult<List<ProjectCommentViewModel>> GetComments(int id){
-        return Ok($"Lista de comentarios do projeto {id} retornados");
+    public ActionResult<List<ProjectCommentViewModel>> GetAllComments(int id){
+        return Ok($"Lista de comentarios do Projeto{id}");
     }
 
     [Route("{projectId}/comments/{commentId}")]
     [HttpGet]
-    public ActionResult<ProjectCommentViewModel> GetCommentById(int projectId,int commentId){
+    public ActionResult<ProjectCommentDetailsViewModel> GetCommentById(int projectId,int commentId){
         return Ok($"Comentario {commentId} do projeto {projectId} retornados");
     }
 
