@@ -21,7 +21,7 @@ namespace DevFreela.Application.Services.Implemations
         {
             var projects = _devFreelaDbContext.Projects;
             var listProjectViewModel = projects
-                                        .Select(p=> new ProjectViewModel(p.Title,p.Description,p.IdClient,p.IdFreelancer,p.TotalCost,p.ProjectStatus))
+                                        .Select(p=> new ProjectViewModel(p.Id,p.Title,p.Description,p.IdClient,p.IdFreelancer,p.TotalCost,p.ProjectStatus))
                                         .ToList();
             return listProjectViewModel;                            
         }
@@ -32,6 +32,7 @@ namespace DevFreela.Application.Services.Implemations
 
             ProjectDetailsViewModel projectDetailsViewModel = new ProjectDetailsViewModel
                                                                         (
+                                                                            project.Id,
                                                                             project.Title, 
                                                                             project.Description, 
                                                                             project.IdClient,
@@ -58,7 +59,7 @@ namespace DevFreela.Application.Services.Implemations
             return newProject.Id;
         }
 
-        public void DeleteProjetc(int id)
+        public void DeleteProject(int id)
         {
             Project project = _devFreelaDbContext.Projects.SingleOrDefault(p=> p.Id == id);
             if(project !=null)

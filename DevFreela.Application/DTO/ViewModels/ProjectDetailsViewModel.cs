@@ -8,11 +8,12 @@ namespace DevFreela.Application.DTO.ViewModels
     public class ProjectDetailsViewModel
     {
 
-        public ProjectDetailsViewModel( string title, string description, int idClient,int? idFreelancer, 
+        public ProjectDetailsViewModel( int id,string title, string description, int idClient,int? idFreelancer, 
                                         decimal totalCost, DateTime createdAt,DateTime? finishedAt, 
                                         DateTime? startedAt ,ProjectStatus projectStatus,
                                         List<ProjectComment> comments)
         {
+            this.Id = id;
             this.Title = title;
             this.Description = description;
             this.IdClient = idClient;
@@ -24,6 +25,9 @@ namespace DevFreela.Application.DTO.ViewModels
             this.ProjectStatus = projectStatus;
             this.Comments = comments;
         }
+        public int Id { get; set; }
+        
+        
         public string Title { get; private set; }
         public string Description { get; private set; }
         public int IdClient { get; private set; }
