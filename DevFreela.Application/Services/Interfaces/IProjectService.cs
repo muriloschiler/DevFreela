@@ -9,13 +9,13 @@ namespace DevFreela.Application.Services.Interfaces
         List<ProjectViewModel> GetAllProjects(string query);
         ProjectDetailsViewModel GetProjectById(int id);
         int CreateProject(NewProjectInputModel projectInputModel);
-        void UpdateProject(UpdateProjectInputModel putProjectInputModel,int id);
+        void UpdateProject(int id,UpdateProjectInputModel putProjectInputModel);
         void DeleteProject(int id);
         void StartProject(int id);
         void FinishProject(int id);
         List<ProjectCommentViewModel> GetAllComments(int id);
         ProjectCommentDetailsViewModel GetCommentById(int projectId,int commentId);
-        void CreateComment(CreateProjectCommentInputModel projectComment,int id);
+        int CreateComment(CreateProjectCommentInputModel projectComment,int id);
 
     }
 }

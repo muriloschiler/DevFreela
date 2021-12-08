@@ -80,7 +80,7 @@ namespace DevFreela.Application.Services.Implemations
                 project.Start();        
         }
 
-        public void UpdateProject(UpdateProjectInputModel putProjectInputModel, int id)
+        public void UpdateProject(int id,UpdateProjectInputModel putProjectInputModel)
         {
             if(_devFreelaDbContext.Projects.Any(p => p.Id == id)){
                //EntityFramework ou implementando um metodo Update na Entity 
@@ -103,10 +103,11 @@ namespace DevFreela.Application.Services.Implemations
             return projectDetailsViewModel;
         }
 
-        public void CreateComment(CreateProjectCommentInputModel projectComment, int id)
+        public int CreateComment(CreateProjectCommentInputModel projectComment, int id)
         {
             var newComment = new ProjectComment(projectComment.Content,projectComment.IdProject,projectComment.IdUser);
             _devFreelaDbContext.ProjectComments.Add(newComment);
+            return newComment.Id;
         }
     }
 }
