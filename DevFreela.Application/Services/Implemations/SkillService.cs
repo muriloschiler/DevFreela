@@ -1,9 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using DevFreela.Application.DTO.InputModels;
 using DevFreela.Application.DTO.ViewModels;
 using DevFreela.Application.Services.Interfaces;
-using DevFreela.Core.Entities;
 using DevFreela.Infrastructure.Persistence;
 
 namespace DevFreela.Application.Services.Implemations
