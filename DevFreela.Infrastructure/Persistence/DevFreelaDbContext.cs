@@ -6,9 +6,12 @@ namespace DevFreela.Infrastructure.Persistence
 {
     public class DevFreelaDbContext : DbContext
     {
-        public DevFreelaDbContext(DbContextOptions<DevFreelaDbContext> options):base(options) {}
+        // protected override void OnConfiguring(DbContextOptionsBuilder dbContextOptionsBuilder){
+        //     dbContextOptionsBuilder.UseSqlite( "Data Source = DevFreela.db");
+        //     //<StartWorkingDirectory>$(MSBuildProjectDirectory)</StartWorkingDirectory>
 
-        
+        // }
+        public DevFreelaDbContext(DbContextOptions<DevFreelaDbContext> options):base(options){}
         public DbSet<Project> Projects { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Skill> Skills { get; set; }
