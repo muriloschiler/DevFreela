@@ -32,7 +32,7 @@ public class ProjectsController : ControllerBase
     }
     [HttpPut("{id}")]
     public IActionResult Put(int id , [FromBody] UpdateProjectInputModel putProjectInputModel){
-        _projectService.UpdateProject(id,putProjectInputModel);
+        _projectService.UpdateProject(putProjectInputModel);
         return NoContent();
     }
     [HttpDelete("{id}")]
@@ -58,6 +58,7 @@ public class ProjectsController : ControllerBase
     }
 
     [Route("{projectId}/comments")]
+    [HttpGet]
     public ActionResult<List<ProjectCommentViewModel>> GetAllComments(int projectId){
         var listComments = _projectService.GetAllComments(projectId);
         return Ok(listComments);
