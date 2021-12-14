@@ -5,7 +5,6 @@ using DevFreela.Application.DTO.InputModels;
 using DevFreela.Application.DTO.ViewModels;
 using DevFreela.Application.Services.Interfaces;
 using DevFreela.Core.Entities;
-using DevFreela.Core.Enums;
 using DevFreela.Infrastructure.Persistence;
 
 namespace DevFreela.Application.Services.Implemations
@@ -56,34 +55,45 @@ namespace DevFreela.Application.Services.Implemations
                                                 projectInputModel.TotalCost);
 
             _devFreelaDbContext.Projects.Add(newProject);
+            _devFreelaDbContext.SaveChanges();
             return newProject.Id;
         }
 
         public void DeleteProject(int id)
         {
             Project project = _devFreelaDbContext.Projects.SingleOrDefault(p=> p.Id == id);
-            if(project !=null)
+            if(project !=null){
                 project.Cancel();
+                _devFreelaDbContext.SaveChanges();
+            }    
+
         }
 
         public void FinishProject(int id)
         {
             Project project = _devFreelaDbContext.Projects.SingleOrDefault(p=> p.Id == id);
-            if(project !=null)
+            if(project !=null){
                 project.Finish();
+                _devFreelaDbContext.SaveChanges();
+
+            }
         }
 
         public void StartProject(int id)
         {
             Project project = _devFreelaDbContext.Projects.SingleOrDefault(p=> p.Id == id);
-            if(project !=null)
+            if(project !=null){
                 project.Start();        
+                _devFreelaDbContext.SaveChanges();
+            }
         }
 
-        public void UpdateProject(int id,UpdateProjectInputModel putProjectInputModel)
+        public void UpdateProject(UpdateProjectInputModel putProjectInputModel)
         {
-            if(_devFreelaDbContext.Projects.Any(p => p.Id == id)){
-               //EntityFramework ou implementando um metodo Update na Entity 
+            Project project = _devFreelaDbContext.Projects.SingleOrDefault(p => p.Id == putProjectInputModel.Id);
+            if(project != null){
+                project.Update(putProjectInputModel.Title,putProjectInputModel.Description,putProjectInputModel.TotalCost);
+                _devFreelaDbContext.SaveChanges();
             }    
         }
         
@@ -107,6 +117,7 @@ namespace DevFreela.Application.Services.Implemations
         {
             var newComment = new ProjectComment(projectComment.Content,projectComment.IdProject,projectComment.IdUser);
             _devFreelaDbContext.ProjectComments.Add(newComment);
+            _devFreelaDbContext.SaveChanges();
             return newComment.Id;
         }
     }
