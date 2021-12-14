@@ -22,12 +22,13 @@ namespace DevFreela.Infrastructure.Persistence
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             modelBuilder.Entity<User>().HasKey(u=>u.Id);
-            modelBuilder.Entity<User>().HasMany(u=>u.Skills).WithOne();
+            modelBuilder.Entity<User>().HasMany(u=>u.Skills).WithOne().HasForeignKey(userSkill=>userSkill.IdUser);
 
             modelBuilder.Entity<UserSkill>().HasKey(us=> us.Id);
+
             
             modelBuilder.Entity<Skill>().HasKey(s=>s.Id);
-            modelBuilder.Entity<Skill>().HasMany(s=>s.Users).WithOne();
+            modelBuilder.Entity<Skill>().HasMany(s=>s.Users).WithOne().HasForeignKey(userSkill=>userSkill.IdSkill);
         }
 
     }

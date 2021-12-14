@@ -21,10 +21,17 @@ namespace DevFreela.API
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+        /*
+        Criacao de uma migration e update no banco: 
+            O -s se refere ao projeto que contem as configuracoes de conexao do DbContext
+              
+            dotnet ef migrations add InitialMigration -s ../DevFreela.API/DevFreela.API.csproj -o ./Persistence/Migrations  
+            dotnet ef database update -s ../DevFreela.API/DevFreela.API.csproj 
+        */
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DevFreelaDbContext>(
-                        options => options.UseSqlite(Configuration.GetConnectionString("SQLite")));
+                                options => options.UseSqlite(Configuration.GetConnectionString("SQLite")));
             services.AddScoped<IProjectService,ProjectService>();
             services.AddScoped<ISkillService,SkillService>();
             services.AddControllers();
