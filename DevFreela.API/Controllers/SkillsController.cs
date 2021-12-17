@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DevFreela.API.Controllers
 {
-    [Route("api/skills")]
+    [Route("api/v1/skills")]
     public class SkillsController: ControllerBase
     {
         private readonly ISkillService _skillService;

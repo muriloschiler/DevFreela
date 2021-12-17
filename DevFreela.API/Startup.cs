@@ -34,6 +34,7 @@ namespace DevFreela.API
                                 options => options.UseSqlite(Configuration.GetConnectionString("SQLite")));
             services.AddScoped<IProjectService,ProjectService>();
             services.AddScoped<ISkillService,SkillService>();
+            services.AddScoped<IUserService,UserService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
