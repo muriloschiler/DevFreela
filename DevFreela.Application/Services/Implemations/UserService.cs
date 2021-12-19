@@ -12,12 +12,13 @@ namespace DevFreela.Application.Services.Implemations{
         {
             _devFreelaDbContext=devFreelaDbContext;
         }
-        public void AddUser(CreateUserInputModel createUserInputModel)
+        public int AddUser(CreateUserInputModel createUserInputModel)
         {
             User newUser = new User(createUserInputModel.Name,createUserInputModel.BirthDate,
                                     createUserInputModel.Email);
             _devFreelaDbContext.Users.Add(newUser);
             _devFreelaDbContext.SaveChanges();
+            return newUser.Id;
             
         }
         public UserDetailsViewModel GetUser(int id)

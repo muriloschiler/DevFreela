@@ -51,6 +51,7 @@ namespace DevFreela.Application.Services.Implemations
             return projectDetailsViewModel;
         }
         
+        //Obsoleto
         public int CreateProject(NewProjectInputModel projectInputModel)
         {
             Project newProject = new Project(   projectInputModel.Title,
