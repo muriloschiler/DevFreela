@@ -14,20 +14,18 @@ namespace DevFreela.Application.Services.Implemations{
         }
         public void AddUser(CreateUserInputModel createUserInputModel)
         {
-            User newUser = new User(createUserInputModel.Name,createUserInputModel.Email,
-                                    createUserInputModel.BirthDate);
+            User newUser = new User(createUserInputModel.Name,createUserInputModel.BirthDate,
+                                    createUserInputModel.Email);
             _devFreelaDbContext.Users.Add(newUser);
             _devFreelaDbContext.SaveChanges();
             
         }
         public UserDetailsViewModel GetUser(int id)
         {
-            UserDetailsViewModel userDetails = (UserDetailsViewModel)_devFreelaDbContext.Users.Where(u=> u.Id ==id)
-                                                                        .Select(u=>new UserDetailsViewModel(
-                                                                            u.Name,u.BirthDate,u.Email,u.CreatedAt,
-                                                                            u.UserStatus,u.Skills,u.OwnedProjects,u.FreelancerProjects,
-                                                                            u.Comments
-                                                                        ));
+            User user = _devFreelaDbContext.Users.SingleOrDefault(u=>u.Id == id);
+            UserDetailsViewModel userDetails = new UserDetailsViewModel(user.Name,user.BirthDate,user.Email,user.CreatedAt,
+                                                                            user.UserStatus,user.Skills,user.OwnedProjects,
+                                                                            user.FreelancerProjects,user.Comments);
                                                                         
             return userDetails;
         }

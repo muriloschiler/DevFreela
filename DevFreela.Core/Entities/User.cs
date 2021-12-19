@@ -7,7 +7,7 @@ namespace DevFreela.Core.Entities
     public class User : BaseEntity
     {
 
-        public User(string name,string email,DateTime BirthDate)
+        public User(string name,DateTime BirthDate ,string email)
         {
             this.Name = name;
             this.BirthDate = BirthDate;

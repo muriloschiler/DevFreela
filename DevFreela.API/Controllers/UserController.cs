@@ -13,10 +13,9 @@ namespace DevFreela.API.Controllers{
         {
             _UserService=userService;
         }
-
-        [Route("/login")]
+        [Route("login")]
         [HttpPost]
-        public IActionResult Login(LoginModel loginModel){
+        public IActionResult Login([FromBody] LoginModel loginModel){
 
             //Todo:Modulo de autenticacao
             return NoContent();
@@ -29,9 +28,8 @@ namespace DevFreela.API.Controllers{
             _UserService.AddUser(createUserInputModel);
             return NoContent();
         }
-
+        [Route("{id}")]
         [HttpGet]
-        [Route("/{id}")]
         public ActionResult<UserDetailsViewModel> GetById([FromRoute]int id){
             UserDetailsViewModel user =  _UserService.GetUser(id);
             if(user != null){
