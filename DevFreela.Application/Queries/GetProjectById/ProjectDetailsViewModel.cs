@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using DevFreela.Core.Entities;
 using DevFreela.Core.Enums;
 
-namespace DevFreela.Application.DTO.ViewModels
+namespace DevFreela.Application.Queries.GetProjectById
 {
     public class ProjectDetailsViewModel
     {

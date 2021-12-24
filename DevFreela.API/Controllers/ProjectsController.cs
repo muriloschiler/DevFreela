@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using DevFreela.Application.DTO.ViewModels;
 using DevFreela.Application.DTO.InputModels;
 using Microsoft.AspNetCore.Mvc;
-using DevFreela.Application.Services.Interfaces;
 using MediatR;
 using DevFreela.Application.Commands.CreateProject;
 using System.Threading.Tasks;
@@ -11,28 +10,33 @@ using DevFreela.Application.Commands.DeleteProject;
 using DevFreela.Application.Commands.StartProject;
 using DevFreela.Application.Commands.FinishProject;
 using DevFreela.Application.Commands.CreateComment;
+using DevFreela.Application.Queries.GetProjectById;
+using DevFreela.Application.Queries.GetProject;
+using DevFreela.Application.Queries.GetAllComments;
+using DevFreela.Application.Queries.GetCommentById;
 
 [Route("api/v1/projects")]
 public class ProjectsController : ControllerBase
 {
-    private readonly IProjectService _projectService ;
     private readonly IMediator _mediator;
     
-    public ProjectsController(IProjectService projectService,IMediator mediator)
+    public ProjectsController(IMediator mediator)
     {
-        _projectService = projectService;
         _mediator=mediator;
 
     }
+    
     [HttpGet]
-    public ActionResult<List<ProjectViewModel>> Get([FromQuery] string query){        
-        var listProjects = _projectService.GetAllProjects(query);
+    public async Task<ActionResult<List<ProjectViewModel>>> Get([FromQuery] string query){        
+        var projectQuery = new GetProjectQuery(query);
+        var listProjects = await _mediator.Send(projectQuery);
         return Ok(listProjects);
     }
 
     [HttpGet("{id}")]
-    public ActionResult<ProjectDetailsViewModel> GetById(int id){        
-        var project = _projectService.GetProjectById(id);
+    public async Task<ActionResult<ProjectDetailsViewModel>> GetById(int id){
+        GetProjectByIdQuery projectQuery = new GetProjectByIdQuery(id);
+        var project = await _mediator.Send(projectQuery);        
         return Ok(project);
     }
 
@@ -77,15 +81,18 @@ public class ProjectsController : ControllerBase
 
     [Route("{projectId}/comments")]
     [HttpGet]
-    public ActionResult<List<ProjectCommentViewModel>> GetAllComments(int projectId){
-        var listComments = _projectService.GetAllComments(projectId);
+    public async Task<ActionResult<List<ProjectCommentViewModel>>> GetAllComments(int projectId){
+        var commentsQuery = new GetAllCommentsQuery(projectId);
+        var listComments = await _mediator.Send(commentsQuery);
         return Ok(listComments);
     }
 
     [Route("{projectId}/comments/{commentId}")]
     [HttpGet]
-    public ActionResult<ProjectCommentDetailsViewModel> GetCommentById(int projectId,int commentId){
-        var comment = _projectService.GetCommentById(projectId,commentId);
+    public async Task<ActionResult<ProjectCommentDetailsViewModel>> GetCommentById(int projectId,int commentId){
+        var commentQuery = new GetCommentByIdQuery(projectId,commentId);
+        
+        var comment = await _mediator.Send(commentQuery);
         return Ok(comment);
     }
 
