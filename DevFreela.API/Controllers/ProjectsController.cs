@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using DevFreela.Application.DTO.ViewModels;
-using DevFreela.Application.DTO.InputModels;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using DevFreela.Application.Commands.CreateProject;
@@ -14,6 +12,7 @@ using DevFreela.Application.Queries.GetProjectById;
 using DevFreela.Application.Queries.GetProject;
 using DevFreela.Application.Queries.GetAllComments;
 using DevFreela.Application.Queries.GetCommentById;
+using DevFreela.Application.Queries.GetAllProject;
 
 [Route("api/v1/projects")]
 public class ProjectsController : ControllerBase
@@ -28,7 +27,7 @@ public class ProjectsController : ControllerBase
     
     [HttpGet]
     public async Task<ActionResult<List<ProjectViewModel>>> Get([FromQuery] string query){        
-        var projectQuery = new GetProjectQuery(query);
+        var projectQuery = new GetAllProjectQuery(query);
         var listProjects = await _mediator.Send(projectQuery);
         return Ok(listProjects);
     }

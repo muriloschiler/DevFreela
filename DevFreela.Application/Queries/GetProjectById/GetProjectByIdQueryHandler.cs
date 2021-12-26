@@ -1,28 +1,24 @@
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using DevFreela.Core.Entities;
-using DevFreela.Infrastructure.Persistence;
+using DevFreela.Core.Repositories;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace DevFreela.Application.Queries.GetProjectById
 {
     public class GetProjectByIdQueryHandler : IRequestHandler<GetProjectByIdQuery, ProjectDetailsViewModel>
     {
-        public readonly DevFreelaDbContext _devFreelaDbContext;
+        private readonly IProjectRepository _projectRepository;
 
-        public GetProjectByIdQueryHandler(DevFreelaDbContext devFreelaDbContext)
+        public GetProjectByIdQueryHandler(IProjectRepository projectRepository)
         {
-            _devFreelaDbContext = devFreelaDbContext;
+            _projectRepository = projectRepository;
         }
 
         public async Task<ProjectDetailsViewModel> Handle(GetProjectByIdQuery request, CancellationToken cancellationToken)
         {
-            Project project = await _devFreelaDbContext.Projects
-                                                            .Include(p=>p.Client)
-                                                            .Include(p=>p.Freelancer)
-                                                            .SingleOrDefaultAsync(p => p.Id == request.Id);
+            Project project = await _projectRepository.GetProjectIncluded(request.Id);
+                                                            
                                                             
 
             ProjectDetailsViewModel projectDetailsViewModel = new ProjectDetailsViewModel
@@ -31,11 +27,9 @@ namespace DevFreela.Application.Queries.GetProjectById
                                                                             project.Title, 
                                                                             project.Description, 
                                                                             project.IdClient,
-                                                                            project.Client.Name,
-                                                                            project.Client.Email,
-                                                                            project.IdFreelancer, 
-                                                                            project.Freelancer.Name,
-                                                                            project.Freelancer.Email,
+                                                                            project.Client,
+                                                                            project.IdFreelancer,
+                                                                            project.Freelancer, 
                                                                             project.TotalCost, 
                                                                             project.CreatedAt,
                                                                             project.FinishedAt,

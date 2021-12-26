@@ -8,9 +8,9 @@ namespace DevFreela.Application.Queries.GetProjectById
     public class ProjectDetailsViewModel
     {
 
-        public ProjectDetailsViewModel( int id,string title, string description, int idClient,
-                                        string clientName,string clientEmail, 
-                                        int? idFreelancer,string freelancerName,string freelancerEmail,
+        public ProjectDetailsViewModel( int id,string title, string description, 
+                                        int idClient,User client,
+                                        int? idFreelancer,User freelancer,
                                         decimal totalCost, DateTime createdAt,DateTime? finishedAt,
                                         DateTime? startedAt,ProjectStatus projectStatus,
                                         List<ProjectComment> comments)
@@ -19,11 +19,9 @@ namespace DevFreela.Application.Queries.GetProjectById
             this.Title = title;
             this.Description = description;
             this.IdClient = idClient;
-            this.ClientName=clientName;
-            this.ClientEmail=clientEmail;
+            this.Client = client;
             this.IdFreelancer = idFreelancer;
-            this.FreelancerName=freelancerName;
-            this.FreelancerEmail=FreelancerEmail;
+            this.Freelancer = freelancer;
             this.TotalCost = totalCost;
             this.CreatedAt = createdAt;
             this.FinishedAt = finishedAt;
@@ -37,11 +35,9 @@ namespace DevFreela.Application.Queries.GetProjectById
         public string Title { get; private set; }
         public string Description { get; private set; }
         public int IdClient { get; private set; }
-        public string ClientName { get; private set; }
-        public string ClientEmail { get; private set; }
+        public User Client { get; set; }
         public int? IdFreelancer { get; private set; }
-        public string FreelancerName { get; private set; }
-        public string FreelancerEmail { get; private set; }
+        public User Freelancer { get; private set; }
         public decimal TotalCost { get; private set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? FinishedAt { get; set; }

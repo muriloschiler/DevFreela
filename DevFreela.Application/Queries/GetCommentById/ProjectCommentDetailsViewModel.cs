@@ -1,6 +1,6 @@
 using System;
 
-namespace DevFreela.Application.DTO.ViewModels
+namespace DevFreela.Application.Queries.GetCommentById
 {
     public class ProjectCommentDetailsViewModel
     {

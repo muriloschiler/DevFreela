@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using DevFreela.Application.DTO.InputModels;
+using DevFreela.Core.Repositories;
 using DevFreela.Infrastructure.Persistence;
 using MediatR;
 
@@ -10,19 +11,20 @@ namespace DevFreela.Application.Queries.GetAllComments
 {
     public class GetAllCommentsQueryHandler : IRequestHandler<GetAllCommentsQuery, List<ProjectCommentViewModel>>
     {
-        public readonly DevFreelaDbContext _devFreelaDbContext;
+        private readonly IProjectRepository _projectRepository;
 
-        public GetAllCommentsQueryHandler(DevFreelaDbContext devFreelaDbContext)
+        public GetAllCommentsQueryHandler(IProjectRepository projectRepository)
         {
-            _devFreelaDbContext = devFreelaDbContext;
+            _projectRepository = projectRepository;
         }
 
-        public Task<List<ProjectCommentViewModel>> Handle(GetAllCommentsQuery request, CancellationToken cancellationToken)
+        public async Task<List<ProjectCommentViewModel>> Handle(GetAllCommentsQuery request, CancellationToken cancellationToken)
         {
-            var listProjectCommentsViewModel = _devFreelaDbContext.ProjectComments
-                                                        .Where(p => p.IdProject == request.ProjectId)
-                                                        .Select(p => new ProjectCommentViewModel(p.Content,p.IdUser))
-                                                        .ToList();
-            return Task.FromResult(listProjectCommentsViewModel);        }
+            var ProjectComments = await _projectRepository.GetAllComments(request.ProjectId);
+            var listProjectCommentsViewModel = ProjectComments
+                                                    .Select(p => new ProjectCommentViewModel(p.Content,p.IdUser))
+                                                    .ToList();
+
+            return listProjectCommentsViewModel;        }
     }
 }

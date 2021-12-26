@@ -1,13 +1,13 @@
 using System.Collections.Generic;
-using DevFreela.Application.DTO.ViewModels;
+using DevFreela.Application.Queries.GetAllProject;
 using MediatR;
 
 namespace DevFreela.Application.Queries.GetProject
 {
-    public class GetProjectQuery : IRequest<List<ProjectViewModel>>
+    public class GetAllProjectQuery : IRequest<List<ProjectViewModel>>
     {
 
-        public GetProjectQuery(string query)
+        public GetAllProjectQuery(string query)
         {
             this.Query = query;
 

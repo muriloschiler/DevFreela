@@ -1,4 +1,4 @@
-namespace DevFreela.Application.DTO.InputModels
+namespace DevFreela.Application.Queries.GetAllComments
 {
     public class ProjectCommentViewModel
     {
