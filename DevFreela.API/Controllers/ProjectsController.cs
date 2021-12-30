@@ -13,6 +13,7 @@ using DevFreela.Application.Queries.GetProject;
 using DevFreela.Application.Queries.GetAllComments;
 using DevFreela.Application.Queries.GetCommentById;
 using DevFreela.Application.Queries.GetAllProject;
+using System.Linq;
 
 [Route("api/v1/projects")]
 public class ProjectsController : ControllerBase
@@ -39,20 +40,20 @@ public class ProjectsController : ControllerBase
         return Ok(project);
     }
 
-    //Refatorado
+    
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] CreateProjectCommand createProjectCommand){
         int id = await _mediator.Send(createProjectCommand);    
         return CreatedAtAction(nameof(GetById),new{Id = id},createProjectCommand);
     }
-    //Refatorado
+    
     [HttpPut("{id}")]
     public async Task<IActionResult> Put([FromBody] UpdateProjectCommand updateProjectCommand){
         await _mediator.Send(updateProjectCommand);
         return NoContent();
     }
 
-    //Refatorado
+    
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id){
         var request = new DeleteProjectCommand(id);
@@ -60,7 +61,7 @@ public class ProjectsController : ControllerBase
         return NoContent();
     }
 
-    //Refatorado
+    
     [Route("{id}/start")]
     [HttpPut]
     public async Task<IActionResult> Start(int id){
@@ -69,7 +70,7 @@ public class ProjectsController : ControllerBase
         return NoContent();
     }
 
-    //Refatorado
+    
     [Route("{id}/finish")]
     [HttpPut]
     public async Task<IActionResult> Finish(int id){
@@ -97,7 +98,6 @@ public class ProjectsController : ControllerBase
 
     [Route("{projectId}/comments")]
     [HttpPost]
-    //Refatorado
     public async Task<IActionResult> PostComment([FromBody] CreateCommentCommand createCommentCommand,
                                                  [FromRoute]int idProject){
 

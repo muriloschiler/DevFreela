@@ -1,9 +1,12 @@
+using DevFreela.API.Filters;
 using DevFreela.Application.Commands.CreateProject;
 using DevFreela.Application.Services.Implemations;
 using DevFreela.Application.Services.Interfaces;
+using DevFreela.Application.Validator;
 using DevFreela.Core.Repositories;
 using DevFreela.Infrastructure.Persistence;
 using DevFreela.Infrastructure.Persistence.Repositories;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,7 +43,8 @@ namespace DevFreela.API
             services.AddScoped<IUserService,UserService>();
             services.AddScoped<IProjectRepository,ProjectRepository>();
 
-            services.AddControllers();
+            services.AddControllers(options=>options.Filters.Add(typeof(ValidatorFilter)))
+                    .AddFluentValidation(fv=>fv.RegisterValidatorsFromAssemblyContaining<CreateProjectCommandValidator>());
             
             services.AddMediatR(typeof(CreateProjectCommand));
 
