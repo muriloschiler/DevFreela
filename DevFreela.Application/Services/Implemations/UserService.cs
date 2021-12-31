@@ -14,8 +14,14 @@ namespace DevFreela.Application.Services.Implemations{
         }
         public int AddUser(CreateUserInputModel createUserInputModel)
         {
-            User newUser = new User(createUserInputModel.Name,createUserInputModel.BirthDate,
-                                    createUserInputModel.Email);
+            User newUser = new User
+            (
+                createUserInputModel.Name,
+                createUserInputModel.Password,
+                createUserInputModel.Role,
+                createUserInputModel.BirthDate,
+                createUserInputModel.Email
+            );
             _devFreelaDbContext.Users.Add(newUser);
             _devFreelaDbContext.SaveChanges();
             return newUser.Id;

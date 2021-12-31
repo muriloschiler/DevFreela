@@ -7,9 +7,11 @@ namespace DevFreela.Core.Entities
     public class User : BaseEntity
     {
 
-        public User(string name,DateTime BirthDate ,string email)
+        public  User(string name,string password , string role , DateTime BirthDate ,string email)
         {
             this.Name = name;
+            this.Password=password;
+            this.Role=role;
             this.BirthDate = BirthDate;
             this.Email = email;
             
@@ -21,6 +23,8 @@ namespace DevFreela.Core.Entities
             this.Comments = new List<ProjectComment>();
         }
         public string Name { get; private set; }
+        public string Password { get; private set; }
+        public string Role { get; private set; }
         public DateTime BirthDate { get; private set; }
         public string Email { get; private set; }
         public DateTime CreatedAt { get; private set; }
