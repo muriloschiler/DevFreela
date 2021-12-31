@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using DevFreela.Application.DTO.ViewModels;
-using DevFreela.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using DevFreela.Application.Services.Interfaces;
 
 namespace DevFreela.API.Controllers
 {
