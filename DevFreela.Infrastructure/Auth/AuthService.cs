@@ -55,7 +55,9 @@ namespace DevFreela.Infrastructure.Auth
             };
             
             var token = new JwtSecurityToken
-            (   issuer:issuer,audience:audience,claims:claims,
+            (   issuer:issuer,
+                audience:audience,
+                claims:claims,
                 expires:DateTime.Now.AddHours(8),
                 signingCredentials:credentials
             );                                
