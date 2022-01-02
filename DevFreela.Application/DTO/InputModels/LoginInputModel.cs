@@ -1,10 +1,10 @@
 
 namespace DevFreela.Application.DTO.InputModels
 {
-    public class LoginModel
+    public class LoginInputModel
     {
 
-        public LoginModel(string email, string password)
+        public LoginInputModel(string email, string password)
         {
             this.Email = email;
             this.Password = password;

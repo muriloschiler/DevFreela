@@ -1,23 +1,27 @@
 using System.Linq;
 using DevFreela.Application.DTO.InputModels;
+using DevFreela.Application.DTO.ViewModels;
 using DevFreela.Application.Services.Interfaces;
 using DevFreela.Core.Entities;
+using DevFreela.Core.IAuth;
 using DevFreela.Infrastructure.Persistence;
 
 namespace DevFreela.Application.Services.Implemations{
     public class UserService : IUserService
     {
         public readonly DevFreelaDbContext _devFreelaDbContext;
-        public UserService(DevFreelaDbContext devFreelaDbContext)
+        public readonly IAuthService _authService;
+        public UserService(DevFreelaDbContext devFreelaDbContext,IAuthService authService)
         {
             _devFreelaDbContext=devFreelaDbContext;
+            _authService=authService;
         }
         public int AddUser(CreateUserInputModel createUserInputModel)
         {
             User newUser = new User
             (
                 createUserInputModel.Name,
-                createUserInputModel.Password,
+                _authService.ComputeSha256Hash(createUserInputModel.Password),
                 createUserInputModel.Role,
                 createUserInputModel.BirthDate,
                 createUserInputModel.Email
@@ -37,9 +41,17 @@ namespace DevFreela.Application.Services.Implemations{
             return userDetails;
         }
 
-        public void Login(LoginModel loginModel)
+        public LoginViewModel Login(LoginInputModel loginModelInputModel)
         {
-            throw new System.NotImplementedException();
+            var passwordHash = _authService.ComputeSha256Hash(loginModelInputModel.Password);
+            var user = _devFreelaDbContext.Users
+                .SingleOrDefault(u=>u.Email == loginModelInputModel.Email&&u.Password== passwordHash);
+            
+            if(user !=null ){
+                var token = _authService.GenerateJWTToken(user.Email,user.Role);
+                return new LoginViewModel(token,user.Email);
+            }
+            return null;                            
         }
     }
 }

@@ -1,5 +1,6 @@
 
 using DevFreela.Application.DTO.InputModels;
+using DevFreela.Application.DTO.ViewModels;
 using DevFreela.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,10 +16,11 @@ namespace DevFreela.API.Controllers{
         }
         [Route("login")]
         [HttpPost]
-        public IActionResult Login([FromBody] LoginModel loginModel){
-
-            //Todo:Modulo de autenticacao
-            return NoContent();
+        public ActionResult<LoginViewModel> Login([FromBody] LoginInputModel loginModel){
+            var login = _UserService.Login(loginModel);
+            if(login != null)
+                return Ok(login);
+            return NotFound();
         }
 
         [HttpPost]
