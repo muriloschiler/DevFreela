@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using DevFreela.Application.Queries.GetAllProject;
 using DevFreela.Core.Repositories;
-using DevFreela.Infrastructure.Persistence;
 using MediatR;
 
 namespace DevFreela.Application.Queries.GetProject

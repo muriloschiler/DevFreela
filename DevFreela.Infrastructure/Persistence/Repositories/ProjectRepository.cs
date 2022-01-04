@@ -51,17 +51,17 @@ namespace DevFreela.Infrastructure.Persistence.Repositories
                 await _devFreelaDbContext.SaveChangesAsync();
         }
 
-        public async Task<IQueryable<ProjectComment>> GetAllComments(int projectId)
+        public async Task<List<ProjectComment>> GetAllComments(int projectId)
         {
             return await Task.FromResult(
                                     _devFreelaDbContext.ProjectComments
-                                    .Where(p => p.IdProject == projectId)
+                                    .Where(p => p.IdProject == projectId).ToList()
                                 );
         }
 
-        public async Task<IQueryable<Project>> GetAllProjects(string query)
+        public async Task<List<Project>> GetAllProjects(string query)
         {
-            return (IQueryable<Project>) await Task.FromResult(_devFreelaDbContext.ProjectComments);
+            return await Task.FromResult(_devFreelaDbContext.Projects.ToList());
                                                 
         }
 
