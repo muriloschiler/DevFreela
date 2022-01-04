@@ -14,6 +14,7 @@ using DevFreela.Application.Queries.GetAllComments;
 using DevFreela.Application.Queries.GetCommentById;
 using DevFreela.Application.Queries.GetAllProject;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 [Route("api/v1/projects")]
 public class ProjectsController : ControllerBase
@@ -27,6 +28,7 @@ public class ProjectsController : ControllerBase
     }
     
     [HttpGet]
+    [Authorize(Roles = "client, freelancer")]
     public async Task<ActionResult<List<ProjectViewModel>>> Get([FromQuery] string query){        
         var projectQuery = new GetAllProjectQuery(query);
         var listProjects = await _mediator.Send(projectQuery);
@@ -34,6 +36,7 @@ public class ProjectsController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [Authorize(Roles = "client, freelancer")]
     public async Task<ActionResult<ProjectDetailsViewModel>> GetById(int id){
         GetProjectByIdQuery projectQuery = new GetProjectByIdQuery(id);
         var project = await _mediator.Send(projectQuery);        
@@ -42,12 +45,14 @@ public class ProjectsController : ControllerBase
 
     
     [HttpPost]
+    [Authorize(Roles = "client")]
     public async Task<IActionResult> Post([FromBody] CreateProjectCommand createProjectCommand){
         int id = await _mediator.Send(createProjectCommand);    
         return CreatedAtAction(nameof(GetById),new{Id = id},createProjectCommand);
     }
     
     [HttpPut("{id}")]
+    [Authorize(Roles = "client")]
     public async Task<IActionResult> Put([FromBody] UpdateProjectCommand updateProjectCommand){
         await _mediator.Send(updateProjectCommand);
         return NoContent();
@@ -55,6 +60,7 @@ public class ProjectsController : ControllerBase
 
     
     [HttpDelete("{id}")]
+    [Authorize(Roles = "client")]
     public async Task<IActionResult> Delete(int id){
         var request = new DeleteProjectCommand(id);
         await _mediator.Send(request);
@@ -64,6 +70,7 @@ public class ProjectsController : ControllerBase
     
     [Route("{id}/start")]
     [HttpPut]
+    [Authorize(Roles = "client")]
     public async Task<IActionResult> Start(int id){
         var request = new StartProjectCommand(id);
         await _mediator.Send(request);
@@ -73,6 +80,7 @@ public class ProjectsController : ControllerBase
     
     [Route("{id}/finish")]
     [HttpPut]
+    [Authorize(Roles = "client")]
     public async Task<IActionResult> Finish(int id){
         var request = new FinishProjectCommand(id);
         await _mediator.Send(request);
@@ -81,6 +89,7 @@ public class ProjectsController : ControllerBase
 
     [Route("{projectId}/comments")]
     [HttpGet]
+    [Authorize(Roles = "client, freelancer")]
     public async Task<ActionResult<List<ProjectCommentViewModel>>> GetAllComments(int projectId){
         var commentsQuery = new GetAllCommentsQuery(projectId);
         var listComments = await _mediator.Send(commentsQuery);
@@ -89,6 +98,7 @@ public class ProjectsController : ControllerBase
 
     [Route("{projectId}/comments/{commentId}")]
     [HttpGet]
+    [Authorize(Roles = "client, freelancer")]
     public async Task<ActionResult<ProjectCommentDetailsViewModel>> GetCommentById(int projectId,int commentId){
         var commentQuery = new GetCommentByIdQuery(projectId,commentId);
         
@@ -98,6 +108,7 @@ public class ProjectsController : ControllerBase
 
     [Route("{projectId}/comments")]
     [HttpPost]
+    [Authorize(Roles = "client, freelancer")]
     public async Task<IActionResult> PostComment([FromBody] CreateCommentCommand createCommentCommand,
                                                  [FromRoute]int idProject){
 

@@ -2,11 +2,13 @@
 using DevFreela.Application.DTO.InputModels;
 using DevFreela.Application.DTO.ViewModels;
 using DevFreela.Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevFreela.API.Controllers{
 
     [Route("api/v1/users")]
+    [Authorize]
     public class UsersController :ControllerBase{
         
         public readonly IUserService _UserService;
@@ -16,6 +18,7 @@ namespace DevFreela.API.Controllers{
         }
         [Route("login")]
         [HttpPost]
+        [AllowAnonymous]
         public ActionResult<LoginViewModel> Login([FromBody] LoginInputModel loginModel){
             var login = _UserService.Login(loginModel);
             if(login != null)
@@ -24,6 +27,7 @@ namespace DevFreela.API.Controllers{
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public IActionResult Register([FromBody] CreateUserInputModel createUserInputModel){
 
             //Chama a service para adcionar o user no banco
