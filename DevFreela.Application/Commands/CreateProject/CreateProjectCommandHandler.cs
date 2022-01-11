@@ -2,7 +2,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using DevFreela.Core.Entities;
 using DevFreela.Core.Repositories;
-using DevFreela.Infrastructure.Persistence;
 using MediatR;
 
 namespace DevFreela.Application.Commands.CreateProject

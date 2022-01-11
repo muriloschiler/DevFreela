@@ -61,7 +61,7 @@ namespace DevFreela.Infrastructure.Persistence.Repositories
 
         public async Task<List<Project>> GetAllProjects(string query)
         {
-            return await Task.FromResult(_devFreelaDbContext.Projects.ToList());
+            return await _devFreelaDbContext.Projects.ToListAsync();
                                                 
         }
 

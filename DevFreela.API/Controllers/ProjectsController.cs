@@ -13,8 +13,9 @@ using DevFreela.Application.Queries.GetProject;
 using DevFreela.Application.Queries.GetAllComments;
 using DevFreela.Application.Queries.GetCommentById;
 using DevFreela.Application.Queries.GetAllProject;
-using System.Linq;
 using Microsoft.AspNetCore.Authorization;
+using DevFreela.Application.DTO.InputModels;
+using DevFreela.Application.Commands.ApplyProject;
 
 [Route("api/v1/projects")]
 public class ProjectsController : ControllerBase
@@ -117,4 +118,12 @@ public class ProjectsController : ControllerBase
         return CreatedAtAction(nameof(GetCommentById),new{Id = id},createCommentCommand);
     }
 
+    [Route("{id}")]
+    [HttpPost]
+    [Authorize(Roles = "freelancer")]
+    public async Task<IActionResult> apply([FromBody] ApllyInputCommand apllyInputCommand,int id){
+        apllyInputCommand.SetIdProject(id);
+        await _mediator.Send(apllyInputCommand);
+        return NoContent();
+    }
 }

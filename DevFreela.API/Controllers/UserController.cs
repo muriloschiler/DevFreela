@@ -30,7 +30,6 @@ namespace DevFreela.API.Controllers{
         [AllowAnonymous]
         public IActionResult Register([FromBody] CreateUserInputModel createUserInputModel){
 
-            //Chama a service para adcionar o user no banco
             int id = _UserService.AddUser(createUserInputModel);
             return CreatedAtAction(nameof(GetById),new{Id = id},createUserInputModel);
 

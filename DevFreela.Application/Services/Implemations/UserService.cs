@@ -48,7 +48,7 @@ namespace DevFreela.Application.Services.Implemations{
                 .SingleOrDefault(u=>u.Email == loginModelInputModel.Email&&u.Password== passwordHash);
             
             if(user !=null ){
-                var token = _authService.GenerateJWTToken(user.Email,user.Role);
+                var token = _authService.GenerateJWTToken(user.Email,user.Role.ToString());
                 return new LoginViewModel(token,user.Email);
             }
             return null;                            

@@ -27,6 +27,7 @@ namespace DevFreela.Core.Entities
         public User Client { get; set; }
         public int? IdFreelancer { get; private set; }
         public User Freelancer { get; set; }
+        public List<User> ListFreelancer{get ; private set;}
         public decimal TotalCost { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime? FinishedAt { get; private set; }
