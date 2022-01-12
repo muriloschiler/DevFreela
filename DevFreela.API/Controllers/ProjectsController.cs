@@ -121,9 +121,10 @@ public class ProjectsController : ControllerBase
     [Route("{id}")]
     [HttpPost]
     [Authorize(Roles = "freelancer")]
-    public async Task<IActionResult> apply([FromBody] ApllyInputCommand apllyInputCommand,int id){
+    public async Task<IActionResult> Apply([FromBody] ApllyInputCommand apllyInputCommand,int id){
         apllyInputCommand.SetIdProject(id);
-        await _mediator.Send(apllyInputCommand);
+        if(await _mediator.Send(apllyInputCommand))
+            return BadRequest("Seu perfil já está cadastrado");
         return NoContent();
     }
 }

@@ -1,14 +1,28 @@
 using System.Threading;
 using System.Threading.Tasks;
+using DevFreela.Core.Repositories;
 using MediatR;
 
 namespace DevFreela.Application.Commands.ApplyProject
 {
-    public class ApllyInputCommandHandler : IRequestHandler<ApllyInputCommand, Unit>
+    public class ApllyInputCommandHandler : IRequestHandler<ApllyInputCommand, bool>
     {
-        public Task<Unit> Handle(ApllyInputCommand request, CancellationToken cancellationToken)
+        private IProjectRepository _projectRepository;
+
+        public ApllyInputCommandHandler(IProjectRepository projectRepository)
         {
-            throw new System.NotImplementedException();
+            _projectRepository = projectRepository;
+        }
+
+        public async Task<bool> Handle(ApllyInputCommand request, CancellationToken cancellationToken)
+        {
+            //Adicionar na ListCandidates
+            var project = await _projectRepository.GetProject(request.idProject);
+            
+            if(project.Aplly(request.IdFreelancer))
+                return true;
+            
+            return false;
         }
     }
 }

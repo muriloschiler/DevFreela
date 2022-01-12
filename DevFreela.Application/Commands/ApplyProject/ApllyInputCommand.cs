@@ -2,11 +2,11 @@ using MediatR;
 
 namespace DevFreela.Application.Commands.ApplyProject
 {
-    public class ApllyInputCommand : IRequest<Unit>
+    public class ApllyInputCommand : IRequest<bool>
     {
 
 
-        public ApllyInputCommand(int idFreelancer, int idProject)
+        public ApllyInputCommand(int idFreelancer)
         {
             this.IdFreelancer = idFreelancer;
 

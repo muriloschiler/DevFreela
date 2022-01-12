@@ -19,7 +19,7 @@ namespace DevFreela.Core.Entities
             this.UserStatus = UserStatus.Active;
             this.Comments = new List<ProjectComment>();
             
-            if(role == UserRole.Client)
+            if(role == UserRole.client)
                 this.OwnedProjects = new List<Project>();
             else
             {

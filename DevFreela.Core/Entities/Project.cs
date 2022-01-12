@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using DevFreela.Core.Enums;
 
 namespace DevFreela.Core.Entities
@@ -27,7 +28,7 @@ namespace DevFreela.Core.Entities
         public User Client { get; set; }
         public int? IdFreelancer { get; private set; }
         public User Freelancer { get; set; }
-        public List<User> ListFreelancer{get ; private set;}
+        public List<int> ListCandidates{get ; private set;}
         public decimal TotalCost { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime? FinishedAt { get; private set; }
@@ -35,26 +36,41 @@ namespace DevFreela.Core.Entities
         public ProjectStatus ProjectStatus { get; private set; }
         public List<ProjectComment> Comments { get; private set; }
     
-        public void Cancel(){
+        public void Cancel()
+        {
             if(this.ProjectStatus == ProjectStatus.InProgress)
                 this.ProjectStatus = ProjectStatus.Cancelled;
         }
-        public void Start(){
+        public void Start()
+        {
             if(this.ProjectStatus == ProjectStatus.Created){
                 this.ProjectStatus = ProjectStatus.InProgress;
                 this.StartedAt = DateTime.Now;
             }
         }
-        public void Finish(){
-            if(this.ProjectStatus == ProjectStatus.InProgress){
+        public void Finish()
+        {
+            if(this.ProjectStatus == ProjectStatus.InProgress)
+            {
                 this.ProjectStatus = ProjectStatus.Finished;
                 this.FinishedAt = DateTime.Now;
             }
         }
-        public void Update(string title,string description,decimal totalCost){
+        public void Update(string title,string description,decimal totalCost)
+        {
             this.Title = title;
             this.Description = description;
             this.TotalCost=totalCost;
+        }
+    
+        public bool Aplly(int idFreelancer)
+        { 
+            if(ListCandidates.SingleOrDefault(id => id==idFreelancer) == 0)
+            {
+                this.ListCandidates.Add(idFreelancer);
+                return true;
+            }
+            return false;
         }
     }
 }
