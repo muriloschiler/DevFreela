@@ -12,7 +12,7 @@ namespace DevFreela.Infrastructure.Persistence.Configurations
             
             builder.HasOne(p=>p.Client).WithMany(user=> user.OwnedProjects)
                                             .HasForeignKey(p=> p.IdClient).OnDelete(DeleteBehavior.Restrict);
-
+                                            
             builder.HasOne(p=>p.Freelancer).WithMany(user=>user.FreelancerProjects)
                                             .HasForeignKey(p=>p.IdFreelancer).OnDelete(DeleteBehavior.Restrict);
         }

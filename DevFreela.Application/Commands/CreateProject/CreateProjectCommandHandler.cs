@@ -20,7 +20,6 @@ namespace DevFreela.Application.Commands.CreateProject
             Project newProject = new Project(   request.Title,
                                                 request.Description,
                                                 request.IdClient,
-                                                request.IdFreelancer,
                                                 request.TotalCost);
 
             await _projectRepository.AddProject(newProject);

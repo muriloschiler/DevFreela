@@ -9,18 +9,18 @@ namespace DevFreela.Core.Entities
     {
 
 
-        public Project(string title, string description, int idClient, int? idFreelancer, decimal totalCost)
+        public Project(string title, string description, int idClient, decimal totalCost)
         {
 
             this.Title = title;
             this.Description = description;
             this.IdClient = idClient;
-            this.IdFreelancer = idFreelancer;
             this.TotalCost = totalCost;
 
             CreatedAt = DateTime.Now;
-            Comments = new List<ProjectComment>();
             this.ProjectStatus = ProjectStatus.Created;
+            Comments = new List<ProjectComment>();
+            this.ListCandidates= new List<int>();
         }    
         public string Title { get; private set; }
         public string Description { get; private set; }
