@@ -72,5 +72,16 @@ namespace DevFreela.Core.Entities
             }
             return false;
         }
+    
+        public void Hire(int idFreelancer){
+            this.IdFreelancer = idFreelancer;
+        }
+        public bool Uncontract(int idFreelancer){
+            if (this.IdFreelancer == idFreelancer){
+                this.IdFreelancer=null;
+                return true;
+            }
+            return false;
+        }
     }
 }
