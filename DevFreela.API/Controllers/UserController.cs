@@ -1,4 +1,5 @@
 
+using System.Threading.Tasks;
 using DevFreela.Application.DTO.InputModels;
 using DevFreela.Application.DTO.ViewModels;
 using DevFreela.Application.Services.Interfaces;
@@ -16,11 +17,13 @@ namespace DevFreela.API.Controllers{
         {
             _UserService=userService;
         }
+
         [Route("login")]
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult<LoginViewModel> Login([FromBody] LoginInputModel loginModel){
-            var login = _UserService.Login(loginModel);
+        public async Task<ActionResult<LoginViewModel>> Login([FromBody] LoginInputModel loginModel)
+        {
+            var login = await _UserService.Login(loginModel);
             if(login != null)
                 return Ok(login);
             return NotFound();
@@ -28,23 +31,34 @@ namespace DevFreela.API.Controllers{
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult Register([FromBody] CreateUserInputModel createUserInputModel){
-
-            int id = _UserService.AddUser(createUserInputModel);
+        public async Task<IActionResult> Register([FromBody] CreateUserInputModel createUserInputModel)
+        {
+            int id = await _UserService.AddUser(createUserInputModel);
             return CreatedAtAction(nameof(GetById),new{Id = id},createUserInputModel);
-
         }
+
         [Route("{id}")]
         [HttpGet]
-        public ActionResult<UserDetailsViewModel> GetById([FromRoute]int id){
-            UserDetailsViewModel user =  _UserService.GetUser(id);
+        public async Task<ActionResult<UserDetailsViewModel>> GetById([FromRoute]int id)
+        {
+            UserDetailsViewModel user =  await _UserService.GetUser(id);
             if(user != null){
                 return Ok(user);
             }
             return BadRequest();
         }
         
-
+        [Route("{id}/skill")]
+        [HttpPut]
+        [Authorize(Roles = "freelancer")]
+        public async Task<ActionResult> AddSkill([FromBody] AddSkilInputModel addSkilInputModel,int id)
+        {
+            addSkilInputModel.idFreelancer=id;
+            var result = await _UserService.addSkil(addSkilInputModel);
+            if(result == true)
+                return Ok();
+            return BadRequest();
+        }
+        
     }
-
 }

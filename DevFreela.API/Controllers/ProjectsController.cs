@@ -140,6 +140,7 @@ public class ProjectsController : ControllerBase
         await _mediator.Send(hireProjectCommand);
         return NoContent();
     }
+
     [Route("{id}/Uncontract")]
     [HttpPut]
     [Authorize(Roles = "client")]

@@ -38,5 +38,9 @@ namespace DevFreela.Core.Entities
         public List<Project> OwnedProjects {get;private set;} 
         public List<Project> FreelancerProjects {get; private set;}
         public List<UserSkill> Skills {get;private set;}
-    }
+        public void SetSkills(int idSkill){    
+            this.Skills.Add(new UserSkill(this.Id,idSkill));
+        }
+    
+    } 
 }
