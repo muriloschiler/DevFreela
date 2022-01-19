@@ -5,8 +5,10 @@ using DevFreela.Application.Services.Implemations;
 using DevFreela.Application.Services.Interfaces;
 using DevFreela.Application.Validator;
 using DevFreela.Core.IAuth;
+using DevFreela.Core.IServices;
 using DevFreela.Core.Repositories;
 using DevFreela.Infrastructure.Auth;
+using DevFreela.Infrastructure.Payments;
 using DevFreela.Infrastructure.Persistence;
 using DevFreela.Infrastructure.Persistence.Repositories;
 using FluentValidation.AspNetCore;
@@ -48,6 +50,7 @@ namespace DevFreela.API
             services.AddScoped<IUserService,UserService>();
             services.AddScoped<IProjectRepository,ProjectRepository>();
             services.AddScoped<IAuthService,AuthService>();
+            services.AddScoped<IPaymentService,PaymentService>();
 
             services.AddControllers(options=>options.Filters.Add(typeof(ValidatorFilter)))
                     .AddFluentValidation(fv=>fv.RegisterValidatorsFromAssemblyContaining<CreateProjectCommandValidator>());

@@ -83,5 +83,8 @@ namespace DevFreela.Core.Entities
             }
             return false;
         }
+        public void SetPaymentPending(){
+            this.ProjectStatus = ProjectStatus.PaymentPending;
+        }
     }
 }

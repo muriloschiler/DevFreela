@@ -39,6 +39,12 @@ namespace DevFreela.Infrastructure.Persistence.Repositories
             project.Finish();
             await _devFreelaDbContext.SaveChangesAsync();
         }
+        public async Task SetPaymentPending(Project project)
+        {
+            project.SetPaymentPending();
+            await _devFreelaDbContext.SaveChangesAsync();
+
+        }
         public async Task StartProject(Project project)
         {
             project.Start();        
@@ -84,5 +90,11 @@ namespace DevFreela.Infrastructure.Persistence.Repositories
                                                 .SingleOrDefaultAsync(p=> p.Id == projectId);
                                                             
         }
+    
+        public async Task SaveChangesAsync(){
+            await _devFreelaDbContext.SaveChangesAsync();
+        }
+
     }
+
 }

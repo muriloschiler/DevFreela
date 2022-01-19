@@ -83,9 +83,9 @@ public class ProjectsController : ControllerBase
     [Route("{id}/finish")]
     [HttpPut]
     [Authorize(Roles = "client")]
-    public async Task<IActionResult> Finish(int id){
-        var request = new FinishProjectCommand(id);
-        await _mediator.Send(request);
+    public async Task<IActionResult> Finish(FinishProjectCommand finishProjectCommand, int id){
+        finishProjectCommand.IdProject = id;
+        await _mediator.Send(finishProjectCommand);
         return NoContent();
     }
 
