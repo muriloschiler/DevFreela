@@ -1,11 +1,9 @@
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using DevFreela.Core.DTO;
 using DevFreela.Core.Entities;
 using DevFreela.Core.IServices;
 using DevFreela.Core.Repositories;
-using DevFreela.Infrastructure.Persistence;
 using MediatR;
 
 namespace DevFreela.Application.Commands.FinishProject
@@ -39,7 +37,6 @@ namespace DevFreela.Application.Commands.FinishProject
                     
                     if(await _paymentService.Payment(paymentInfoInputModel)){
                         await _projectRepository.FinishProject(project);
-                        await _projectRepository.SaveChangesAsync();
                         return Unit.Value;
                     }
                     await _projectRepository.SetPaymentPending(project);

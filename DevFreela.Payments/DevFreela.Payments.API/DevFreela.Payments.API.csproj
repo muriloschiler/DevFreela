@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DevFreela.Payments.Application\DevFreela.Payments.Application.csproj" />
+    <ProjectReference Include="..\DevFreela.Payments.Infrastructure\DevFreela.Payments.Infrastructure.csproj" />
+    <ProjectReference Include="..\DevFreela.Payments.Core\DevFreela.Payments.Core.csproj" />
+  </ItemGroup>
+
+</Project>
