@@ -8,6 +8,7 @@ using DevFreela.Core.IAuth;
 using DevFreela.Core.IServices;
 using DevFreela.Core.Repositories;
 using DevFreela.Infrastructure.Auth;
+using DevFreela.Infrastructure.MessageBus;
 using DevFreela.Infrastructure.Payments;
 using DevFreela.Infrastructure.Persistence;
 using DevFreela.Infrastructure.Persistence.Repositories;
@@ -51,6 +52,7 @@ namespace DevFreela.API
             services.AddScoped<IProjectRepository,ProjectRepository>();
             services.AddScoped<IAuthService,AuthService>();
             services.AddScoped<IPaymentService,PaymentService>();
+            services.AddScoped<IMessageBusService,MessageBusService>();
 
             services.AddHttpClient();
 
