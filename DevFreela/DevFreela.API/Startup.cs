@@ -52,6 +52,8 @@ namespace DevFreela.API
             services.AddScoped<IAuthService,AuthService>();
             services.AddScoped<IPaymentService,PaymentService>();
 
+            services.AddHttpClient();
+
             services.AddControllers(options=>options.Filters.Add(typeof(ValidatorFilter)))
                     .AddFluentValidation(fv=>fv.RegisterValidatorsFromAssemblyContaining<CreateProjectCommandValidator>());
             

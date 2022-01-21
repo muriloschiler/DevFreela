@@ -35,7 +35,7 @@ namespace DevFreela.Application.Commands.FinishProject
                         Amount = request.Amount
                     };
                     
-                    if(await _paymentService.Payment(paymentInfoInputModel)){
+                    if(await _paymentService.ProcessPayment(paymentInfoInputModel)){
                         await _projectRepository.FinishProject(project);
                         return Unit.Value;
                     }
