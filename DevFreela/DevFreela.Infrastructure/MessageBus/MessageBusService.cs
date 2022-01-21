@@ -19,7 +19,7 @@ namespace DevFreela.Infrastructure.MessageBus{
             {
                 using(var chanel = connection.CreateModel())
                 {
-                    //Garantir que a fila, caso nao exista, esteja criada    
+                    //Garantir que a fila, caso nao exista, seja criada    
                     chanel.QueueDeclare(
                         queue:queue,
                         durable:false,

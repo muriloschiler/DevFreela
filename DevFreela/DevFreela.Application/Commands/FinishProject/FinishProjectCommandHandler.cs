@@ -34,14 +34,10 @@ namespace DevFreela.Application.Commands.FinishProject
                         FullName = request.FullName,
                         Amount = request.Amount
                     };
-                    
-                    if(await _paymentService.ProcessPayment(paymentInfoInputModel)){
-                        await _projectRepository.FinishProject(project);
-                        return Unit.Value;
-                    }
+
+                    _paymentService.ProcessPayment(paymentInfoInputModel);
                     await _projectRepository.SetPaymentPending(project);
                     return Unit.Value;
-
                 }
                 return Unit.Value;
         }

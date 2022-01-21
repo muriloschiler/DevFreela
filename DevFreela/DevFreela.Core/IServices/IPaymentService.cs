@@ -5,6 +5,6 @@ namespace DevFreela.Core.IServices
 {
     public interface IPaymentService
     {
-         Task<bool> ProcessPayment(PaymentInfoInputModel paymentInfoInputModel);
+        void ProcessPayment(PaymentInfoInputModel paymentInfoInputModel);
     }
 }

@@ -10,30 +10,19 @@ namespace DevFreela.Infrastructure.Payments
 {
     public class PaymentService : IPaymentService
     {
-        private readonly IHttpClientFactory _httpClientFactory;
-        private readonly string _paymentsBaseUrl;
-
-        public PaymentService(IHttpClientFactory httpClientFactory, IConfiguration configuration)
+        private readonly IMessageBusService _messageBusService;
+        public PaymentService(IMessageBusService messageBusService)
         {
-            _httpClientFactory = httpClientFactory;
-            _paymentsBaseUrl = configuration.GetSection("Services:Payments").Value;
+            this._messageBusService = messageBusService;
         }
 
-        public async Task<bool> ProcessPayment(PaymentInfoInputModel paymentInfoInputModel)
+        public void ProcessPayment(PaymentInfoInputModel paymentInfoInputModel)
         {
-            //Fazer a requisicao para a DevFreela.Payments  
-            var url = $"{_paymentsBaseUrl}/api/v1/payments";
+            var paymentInfoContentJSON = JsonSerializer.Serialize(paymentInfoInputModel);
+            var paymentInfoContentBYTES = Encoding.UTF8.GetBytes(paymentInfoContentJSON);
+
+            _messageBusService.Publish("Payments",paymentInfoContentBYTES);
             
-            var paymentInfoContent = new StringContent(
-                JsonSerializer.Serialize(paymentInfoInputModel),
-                Encoding.UTF8,
-                "application/json"
-            );
-
-            var httpClient = _httpClientFactory.CreateClient("Devfreela.Infrastructure.PaymentService");
-            var response = await httpClient.PostAsync(url,paymentInfoContent);
-
-            return response.IsSuccessStatusCode;
         }
     }
 }
