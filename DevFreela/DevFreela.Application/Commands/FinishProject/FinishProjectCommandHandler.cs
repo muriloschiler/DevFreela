@@ -18,7 +18,6 @@ namespace DevFreela.Application.Commands.FinishProject
         {
             _projectRepository = projectRepository;
             _paymentService = paymentService;
-
         }
 
         public async Task<Unit> Handle(FinishProjectCommand request, CancellationToken cancellationToken)

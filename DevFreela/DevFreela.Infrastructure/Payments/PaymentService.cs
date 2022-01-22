@@ -10,6 +10,7 @@ namespace DevFreela.Infrastructure.Payments
 {
     public class PaymentService : IPaymentService
     {
+        private const string REQUIRED_PAYMENTS = "Required_Payments";
         private readonly IMessageBusService _messageBusService;
         public PaymentService(IMessageBusService messageBusService)
         {
@@ -21,7 +22,7 @@ namespace DevFreela.Infrastructure.Payments
             var paymentInfoContentJSON = JsonSerializer.Serialize(paymentInfoInputModel);
             var paymentInfoContentBYTES = Encoding.UTF8.GetBytes(paymentInfoContentJSON);
 
-            _messageBusService.Publish("Payments",paymentInfoContentBYTES);
+            _messageBusService.Publish(REQUIRED_PAYMENTS,paymentInfoContentBYTES);
             
         }
     }

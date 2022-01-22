@@ -1,4 +1,5 @@
 using System.Text;
+using DevFreela.API.Consumers;
 using DevFreela.API.Filters;
 using DevFreela.Application.Commands.CreateProject;
 using DevFreela.Application.Services.Implemations;
@@ -54,6 +55,8 @@ namespace DevFreela.API
             services.AddScoped<IPaymentService,PaymentService>();
             services.AddScoped<IMessageBusService,MessageBusService>();
 
+
+            services.AddHostedService<ProcessPaymentConsumer>();
             services.AddHttpClient();
 
             services.AddControllers(options=>options.Filters.Add(typeof(ValidatorFilter)))

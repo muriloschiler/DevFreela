@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using DevFreela.Core.Enums;
 
@@ -28,6 +29,8 @@ namespace DevFreela.Core.Entities
         public User Client { get; set; }
         public int? IdFreelancer { get; private set; }
         public User Freelancer { get; set; }
+        
+        [NotMapped]
         public List<int> ListCandidates{get ; private set;}
         public decimal TotalCost { get; private set; }
         public DateTime CreatedAt { get; private set; }

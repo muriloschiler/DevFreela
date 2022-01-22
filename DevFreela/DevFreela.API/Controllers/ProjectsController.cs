@@ -86,7 +86,7 @@ public class ProjectsController : ControllerBase
     public async Task<IActionResult> Finish(FinishProjectCommand finishProjectCommand, int id){
         finishProjectCommand.IdProject = id;
         await _mediator.Send(finishProjectCommand);
-        return NoContent();
+        return Accepted();
     }
 
     [Route("{id}/comments")]
