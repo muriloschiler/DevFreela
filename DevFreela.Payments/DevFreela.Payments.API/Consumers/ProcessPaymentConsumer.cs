@@ -14,7 +14,9 @@ namespace DevFreela.Payments.API.Consumers
 {
     public class ProcessPaymentConsumer : BackgroundService
     {
-        private const string QUEUE = "Payments";
+        private const string REQUIRED_PAYMENTS_QUEUE = "Required_Payments";
+        private const string DONE_PAYMENTS_QUEUE = "Done_Payments";
+        
         private readonly IConnection _connection;
         private readonly IModel _channel;
         private IServiceProvider _serviceProvider;
@@ -30,7 +32,14 @@ namespace DevFreela.Payments.API.Consumers
             _channel = _connection.CreateModel();
 
             _channel.QueueDeclare(
-                queue:QUEUE,
+                queue:REQUIRED_PAYMENTS_QUEUE,
+                durable:false,
+                exclusive:false,
+                autoDelete:false,
+                arguments:null
+            );
+            _channel.QueueDeclare(
+                queue:DONE_PAYMENTS_QUEUE,
                 durable:false,
                 exclusive:false,
                 autoDelete:false,
@@ -50,13 +59,26 @@ namespace DevFreela.Payments.API.Consumers
                     .Deserialize<PaymentInfoInputModel>(paymentInfoJSON);
                 this.ProcessPayment(paymentInfoInputModel);
                 
+
+                //Enviar para a fila Done_Payments o id do projeto que foi pago
+                var paymentDoneInputModel= new PaymentApprovedIntegrationEvent(paymentInfoInputModel.IdProject);
+                var paymentDoneJSON = JsonSerializer.Serialize(paymentDoneInputModel);
+                var paymentDoneBYTE = Encoding.UTF8.GetBytes(paymentDoneJSON);
+                _channel.BasicPublish(
+                    exchange: "",
+                    routingKey: DONE_PAYMENTS_QUEUE,
+                    basicProperties:null,
+                    body:paymentDoneBYTE
+                );
+                
+                //Enviar pra fila que a mensagem foi recebida
                 _channel.BasicAck(eventArgs.DeliveryTag,false);
             };
             
-            _channel.BasicConsume(QUEUE,false,consumer);
+
+            _channel.BasicConsume(REQUIRED_PAYMENTS_QUEUE,false,consumer);
             return Task.CompletedTask;
         }
-
         private void ProcessPayment(PaymentInfoInputModel paymentInfoInputModel)
         {
             using(var scoped = _serviceProvider.CreateScope()){
