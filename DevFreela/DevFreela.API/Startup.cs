@@ -1,5 +1,4 @@
 using System.Text;
-using DevFreela.API.Consumers;
 using DevFreela.API.Filters;
 using DevFreela.Application.Commands.CreateProject;
 using DevFreela.Application.Services.Implemations;
@@ -9,6 +8,7 @@ using DevFreela.Core.IAuth;
 using DevFreela.Core.IServices;
 using DevFreela.Core.Repositories;
 using DevFreela.Infrastructure.Auth;
+using DevFreela.Infrastructure.Consumers;
 using DevFreela.Infrastructure.MessageBus;
 using DevFreela.Infrastructure.Payments;
 using DevFreela.Infrastructure.Persistence;

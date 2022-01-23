@@ -10,8 +10,7 @@ using Microsoft.Extensions.Hosting;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace DevFreela.API.Consumers
-{
+namespace DevFreela.Infrastructure.Consumers{
     public class ProcessPaymentConsumer : BackgroundService
     {
         private readonly IConnection _connection;
