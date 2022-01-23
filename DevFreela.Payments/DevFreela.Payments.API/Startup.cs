@@ -1,5 +1,5 @@
-using DevFreela.Payments.API.Consumers;
 using DevFreela.Payments.Core.Interfaces;
+using DevFreela.Payments.Infrastructure.Consumers;
 using DevFreela.Payments.Infrastructure.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

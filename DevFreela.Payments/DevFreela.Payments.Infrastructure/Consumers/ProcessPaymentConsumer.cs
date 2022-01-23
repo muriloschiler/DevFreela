@@ -10,7 +10,7 @@ using Microsoft.Extensions.Hosting;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace DevFreela.Payments.API.Consumers
+namespace DevFreela.Payments.Infrastructure.Consumers
 {
     public class ProcessPaymentConsumer : BackgroundService
     {
