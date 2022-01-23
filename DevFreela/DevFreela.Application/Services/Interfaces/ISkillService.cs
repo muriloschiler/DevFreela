@@ -1,13 +1,13 @@
 using System.Collections.Generic;
-using DevFreela.Application.DTO.InputModels;
+using System.Threading.Tasks;
 using DevFreela.Application.DTO.ViewModels;
 
 namespace DevFreela.Application.Services.Interfaces
 {
     public interface ISkillService
     {
-        List<SkillViewModel> GetAll();
-        SkillDetailsViewModel GetById(int id);
+        Task<List<SkillViewModel>> GetAllAsync();
+        Task<SkillDetailsViewModel> GetByIdAsync(int id);
         
     }
 }

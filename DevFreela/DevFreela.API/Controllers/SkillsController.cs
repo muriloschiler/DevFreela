@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using DevFreela.Application.DTO.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using DevFreela.Application.Services.Interfaces;
+using System.Threading.Tasks;
 
 namespace DevFreela.API.Controllers
 {
@@ -16,13 +17,13 @@ namespace DevFreela.API.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<SkillViewModel>> Get(){
-            var listSkils = _skillService.GetAll();
+        public async Task<ActionResult<List<SkillViewModel>>> Get(){
+            var listSkils = await _skillService.GetAllAsync();
             return Ok(listSkils);
         }
         [HttpGet("{id}")]
-        public ActionResult<SkillDetailsViewModel> GetById(int id){
-            var skill = _skillService.GetById(id);
+        public async Task<ActionResult<SkillDetailsViewModel>> GetById(int id){
+            var skill = await _skillService.GetByIdAsync(id);
             return Ok(skill);
         }
     }

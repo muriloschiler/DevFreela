@@ -51,6 +51,8 @@ namespace DevFreela.API
             services.AddScoped<ISkillService,SkillService>();
             services.AddScoped<IUserService,UserService>();
             services.AddScoped<IProjectRepository,ProjectRepository>();
+            services.AddScoped<IUserRepository,UserRepository>();
+            services.AddScoped<ISkillRepository,SkillRepository>();
             services.AddScoped<IAuthService,AuthService>();
             services.AddScoped<IPaymentService,PaymentService>();
             services.AddScoped<IMessageBusService,MessageBusService>();
