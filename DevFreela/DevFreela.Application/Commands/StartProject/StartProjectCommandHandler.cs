@@ -21,7 +21,8 @@ namespace DevFreela.Application.Commands.StartProject
         {
             Project project = await _projectRepository.GetProject(request.Id);
             if(project !=null){
-                await _projectRepository.StartProject(project);
+                project.Start();        
+                await _projectRepository.SaveChangesAsync();
             }
             return Unit.Value;
         }

@@ -20,8 +20,10 @@ namespace DevFreela.Application.Commands.UpdateProject
         {
             Project project = await _projectRepository.GetProject(request.Id);
             if(project != null){
-                await _projectRepository.UpdateProject(project,request.Title,request.Description,
-                                                        request.TotalCost);
+
+                project.Update(request.Title,request.Description,request.TotalCost);
+                await _projectRepository.SaveChangesAsync();
+
                 return Unit.Value;
             }
             return Unit.Value;

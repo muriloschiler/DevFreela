@@ -58,9 +58,10 @@ namespace DevFreela.Infrastructure.Consumers{
         private async void FinishProject(int idProject)
         {
             using(var scope = _serviceProvider.CreateScope()){
-                var projectRepository = scope.ServiceProvider.GetService<ProjectRepository>();
-                var project = await projectRepository.GetProject(idProject);
-                await projectRepository.FinishProject(project);
+                var _projectRepository = scope.ServiceProvider.GetService<ProjectRepository>();
+                var project = await _projectRepository.GetProject(idProject);
+                project.Finish();
+                await _projectRepository.SaveChangesAsync();
             }
         }
     }

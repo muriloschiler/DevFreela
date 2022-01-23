@@ -35,7 +35,8 @@ namespace DevFreela.Application.Commands.FinishProject
                     };
 
                     _paymentService.ProcessPayment(paymentInfoInputModel);
-                    await _projectRepository.SetPaymentPending(project);
+                    project.SetPaymentPending();
+                    await _projectRepository.SaveChangesAsync();
                     return Unit.Value;
                 }
                 return Unit.Value;

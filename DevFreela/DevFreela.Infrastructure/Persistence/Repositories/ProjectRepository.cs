@@ -27,36 +27,7 @@ namespace DevFreela.Infrastructure.Persistence.Repositories
             await _devFreelaDbContext.Projects.AddAsync(newProject);
             await _devFreelaDbContext.SaveChangesAsync();
         }
-
-        public async Task DeleteProject(Project project)
-        {
-            project.Cancel();
-            await _devFreelaDbContext.SaveChangesAsync();
-        }
-
-        public async Task FinishProject(Project project)
-        {
-            project.Finish();
-            await _devFreelaDbContext.SaveChangesAsync();
-        }
-        public async Task SetPaymentPending(Project project)
-        {
-            project.SetPaymentPending();
-            await _devFreelaDbContext.SaveChangesAsync();
-
-        }
-        public async Task StartProject(Project project)
-        {
-            project.Start();        
-            await _devFreelaDbContext.SaveChangesAsync();
-        }
-        public async Task UpdateProject(Project project,string title,string description,decimal totalCost)
-        {
-
-                project.Update(title,description,totalCost);
-                await _devFreelaDbContext.SaveChangesAsync();
-        }
-
+        
         public async Task<List<ProjectComment>> GetAllComments(int projectId)
         {
             return await Task.FromResult(
