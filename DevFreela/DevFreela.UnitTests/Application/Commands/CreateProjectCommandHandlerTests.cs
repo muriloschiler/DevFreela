@@ -21,7 +21,7 @@ namespace DevFreela.UnitTests.Application.Commands
                 .Setup(pr=>pr.AddProject(It.IsAny<Project>()))
                 .Callback<Project>(p=> listProjects.Add(p));
             
-            var createProjectCommand = new CreateProjectCommand("TituloTeste","Descricao1",1,1,1000);
+            var createProjectCommand = new CreateProjectCommand("TituloTeste","Descricao1",1,1000);
 
             var createProjectCommandHandler =new CreateProjectCommandHandler(projectRepositoryMock.Object);
             //Act
@@ -35,7 +35,6 @@ namespace DevFreela.UnitTests.Application.Commands
                     createProjectCommand.Title,
                     createProjectCommand.Description,
                     createProjectCommand.IdClient.ToString(),
-                    createProjectCommand.IdFreelancer.ToString(),
                     createProjectCommand.TotalCost.ToString(),
                 },
                 new List<string>
@@ -43,7 +42,6 @@ namespace DevFreela.UnitTests.Application.Commands
                     listProjects[0].Title,
                     listProjects[0].Description,
                     listProjects[0].IdClient.ToString(),
-                    listProjects[0].IdFreelancer.ToString(),
                     listProjects[0].TotalCost.ToString(),
                 } 
             );

@@ -14,7 +14,7 @@ namespace DevFreela.UnitTests.Core.Entities
             //Act
             project.Start();
             //Act
-            Assert.Equal(project.ProjectStatus,ProjectStatus.InProgress);
+            Assert.Equal(ProjectStatus.InProgress , project.ProjectStatus);
             Assert.NotNull(project.StartedAt);
         }
         
@@ -26,8 +26,8 @@ namespace DevFreela.UnitTests.Core.Entities
             //Act
             var result = project.Aplly(2);
             //Assert
-            Assert.Equal(2,project.ListCandidates[1]);
-            Assert.Equal(true,result);
+            Assert.Equal(2,project.ListCandidates[0]);
+            Assert.True(result);
         }
 
         [Fact]
@@ -39,7 +39,7 @@ namespace DevFreela.UnitTests.Core.Entities
             project.Aplly(2);
             var result = project.Aplly(2);
             //Assert
-            Assert.Equal(false,result);
+            Assert.False(result);
         }
 
     }

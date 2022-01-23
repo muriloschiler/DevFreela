@@ -24,8 +24,6 @@ namespace DevFreela.Application.Queries.GetProject
                                         .Select(p=> new ProjectViewModel(p.Id,p.Title,p.Description,p.IdClient,p.Client.Name,
                                                                          p.IdFreelancer,p.TotalCost,p.ProjectStatus))
                                         .ToList();
-
-
             return listProjectViewModel; 
         }
     }

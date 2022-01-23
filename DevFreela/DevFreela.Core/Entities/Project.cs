@@ -67,8 +67,9 @@ namespace DevFreela.Core.Entities
         }
     
         public bool Aplly(int idFreelancer)
-        { 
-            if(ListCandidates.SingleOrDefault(id => id==idFreelancer) == 0)
+        {
+            
+            if(!this.ListCandidates.Contains(idFreelancer))
             {
                 this.ListCandidates.Add(idFreelancer);
                 return true;
