@@ -3,7 +3,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using DevFreela.Core.DTO;
+using DevFreela.Core.IntegrationEvents;
 using DevFreela.Infrastructure.Persistence.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -45,7 +45,7 @@ namespace DevFreela.Infrastructure.Consumers{
                 var paymentApprovedIntegrationEventBYTE = eventArgs.Body.ToArray();
                 var paymentApprovedIntegrationEventJSON = Encoding.UTF8.GetString(paymentApprovedIntegrationEventBYTE);
                 var paymentApprovedIntegrationEvent = JsonSerializer.Deserialize<PaymentApprovedIntegrationEvent>(paymentApprovedIntegrationEventJSON);
-                FinishProject(paymentApprovedIntegrationEvent);
+                FinishProject(paymentApprovedIntegrationEvent.IdProject);
 
                 _channel.BasicAck(eventArgs.DeliveryTag,false);
 
@@ -55,11 +55,11 @@ namespace DevFreela.Infrastructure.Consumers{
             return Task.CompletedTask;
         }
 
-        private async void FinishProject(PaymentApprovedIntegrationEvent paymentApprovedIntegrationEvent)
+        private async void FinishProject(int idProject)
         {
             using(var scope = _serviceProvider.CreateScope()){
                 var projectRepository = scope.ServiceProvider.GetService<ProjectRepository>();
-                var project = await projectRepository.GetProject(paymentApprovedIntegrationEvent.IdProject);
+                var project = await projectRepository.GetProject(idProject);
                 await projectRepository.FinishProject(project);
             }
         }

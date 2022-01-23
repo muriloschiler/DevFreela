@@ -1,4 +1,4 @@
-namespace DevFreela.Core.DTO{
+namespace DevFreela.Core.IntegrationEvents{
     public class PaymentApprovedIntegrationEvent
         {
             public PaymentApprovedIntegrationEvent(int idProject)

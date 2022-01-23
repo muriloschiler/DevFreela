@@ -5,23 +5,27 @@ using DevFreela.Application.DTO.ViewModels;
 using DevFreela.Application.Services.Interfaces;
 using DevFreela.Core.Entities;
 using DevFreela.Core.IAuth;
+using DevFreela.Core.IRepositories;
 using DevFreela.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace DevFreela.Application.Services.Implemations{
     public class UserService : IUserService
     {
-        public readonly DevFreelaDbContext _devFreelaDbContext;
-        public readonly IAuthService _authService;
-        public UserService(DevFreelaDbContext devFreelaDbContext,IAuthService authService)
+        private readonly DevFreelaDbContext _devFreelaDbContext;
+        private readonly IAuthService _authService;
+        private readonly IUserRepository _userRepository;
+
+        public UserService(DevFreelaDbContext devFreelaDbContext,IAuthService authService,IUserRepository userRepository)
         {
             _devFreelaDbContext=devFreelaDbContext;
             _authService=authService;
+            _userRepository = userRepository;
         }
 
         public async Task<bool> addSkil(AddSkilInputModel addSkilInputModel)
         {
-            var user = await _devFreelaDbContext.Users.SingleOrDefaultAsync(u => u.Id == addSkilInputModel.idFreelancer);
+            var user = await _userRepository.GetUserByIdAsync(addSkilInputModel.idFreelancer);
             if(user == null)
                 return false;
             
@@ -30,7 +34,7 @@ namespace DevFreela.Application.Services.Implemations{
                 return false;
 
             user.SetSkills(skill.Id);
-            await _devFreelaDbContext.SaveChangesAsync();
+            await _userRepository.SaveChangesAsync();
             return true;
         }
 
@@ -44,14 +48,13 @@ namespace DevFreela.Application.Services.Implemations{
                 createUserInputModel.BirthDate,
                 createUserInputModel.Email
             );
-            await _devFreelaDbContext.Users.AddAsync(newUser);
-            await _devFreelaDbContext.SaveChangesAsync();
+            await _userRepository.AddUserAsync(newUser);
             return newUser.Id;
             
         }
         public async Task<UserDetailsViewModel> GetUser(int id)
         {
-            User user = await _devFreelaDbContext.Users.SingleOrDefaultAsync(u=>u.Id == id);
+            var user = await _userRepository.GetUserByIdAsync(id);
             UserDetailsViewModel userDetails = new UserDetailsViewModel(user.Name,user.BirthDate,user.Email,user.CreatedAt,
                                                                             user.UserStatus,user.Skills,user.OwnedProjects,
                                                                             user.FreelancerProjects,user.Comments);
@@ -62,8 +65,7 @@ namespace DevFreela.Application.Services.Implemations{
         public async Task<LoginViewModel> Login(LoginInputModel loginModelInputModel)
         {
             var passwordHash = _authService.ComputeSha256Hash(loginModelInputModel.Password);
-            var user = await _devFreelaDbContext.Users
-                .SingleOrDefaultAsync(u=>u.Email == loginModelInputModel.Email&&u.Password== passwordHash);
+            var user = await _userRepository.LoginAsync(loginModelInputModel.Email,passwordHash);
             
             if(user !=null ){
                 var token = _authService.GenerateJWTToken(user.Email,user.Role.ToString());
