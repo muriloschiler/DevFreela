@@ -8,10 +8,7 @@
 
 # User-specific files
 Migrations/
-DevFreela/**
 .vscode
-appsettings.json
-appsettings.Development.json
 *.suo
 *.user
 *.userosscache

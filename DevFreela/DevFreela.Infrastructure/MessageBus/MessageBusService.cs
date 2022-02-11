@@ -8,7 +8,13 @@ namespace DevFreela.Infrastructure.MessageBus{
         public MessageBusService()
         {
             this._connectionFactory = new ConnectionFactory{
-                HostName = "localhost"
+                HostName = "localhost",
+                Port = 5672,
+                RequestedHeartbeat = new System.TimeSpan(60),
+                Ssl={
+                    ServerName = "localhost",
+                    Enabled = true 
+                }
             };
         }
 

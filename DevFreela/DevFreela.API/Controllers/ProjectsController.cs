@@ -18,7 +18,8 @@ using DevFreela.Application.Commands.ApplyProject;
 using DevFreela.Application.Commands.HireProject;
 using DevFreela.Application.Commands.UncontractProject;
 
-[Route("api/v1/projects")]
+[Route("api/v1/[controller]")]
+[ApiController]
 public class ProjectsController : ControllerBase
 {
     private readonly IMediator _mediator;

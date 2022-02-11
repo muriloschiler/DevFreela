@@ -26,7 +26,13 @@ namespace DevFreela.Payments.Infrastructure.Consumers
             this._serviceProvider = serviceProvider;
 
             var factory = new ConnectionFactory{
-                HostName = "localhost"
+                HostName = "localhost",
+                Port = 5672,
+                RequestedHeartbeat = new System.TimeSpan(60),
+                Ssl={
+                    ServerName = "localhost",
+                    Enabled = true 
+                }
             };
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();

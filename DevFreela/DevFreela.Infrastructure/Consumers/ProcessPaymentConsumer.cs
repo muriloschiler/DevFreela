@@ -24,6 +24,12 @@ namespace DevFreela.Infrastructure.Consumers{
         
             var connectionFactory = new ConnectionFactory{
                 HostName = "localhost",
+                Port = 5672,
+                RequestedHeartbeat = new System.TimeSpan(60),
+                Ssl={
+                    ServerName = "localhost",
+                    Enabled = true 
+                }
             };
             _connection = connectionFactory.CreateConnection();
             _channel = _connection.CreateModel();
