@@ -46,6 +46,8 @@ namespace DevFreela.UnitTests.Application.Commands
                 } 
             );
 
+            projectRepositoryMock.Verify(pr=>pr.AddProject(It.IsAny<Project>()),Times.Once);
+
         }
     }
 }
